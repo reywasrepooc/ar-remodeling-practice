@@ -1,24 +1,23 @@
-puts "Creating companies..."
-Company.create(name: "Google", founding_year: 1998)
-Company.create(name: "Facebook", founding_year: 2004)
-Company.create(name: "Dunder Mifflin", founding_year: 2002)
-Company.create(name: "Enron", founding_year: 1995)
+puts "Creating houses..."
+House.create(year_built: 1970, address: "30 Main St", state: "PA", solar: true)
+House.create(year_built: 2001, address: "500 Cedar Ave", state: "TX", solar: true)
+House.create(year_built: 1995, address: "123 Chestnut St", state: "PA", solar: false)
 
-puts "Creating devs..."
-Dev.create(name: "Rick")
-Dev.create(name: "Morty")
-Dev.create(name: "Mr. Meseeks")
-Dev.create(name: "Gazorpazop")
+puts "Creating owners..."
+Owner.create(name: "Rick")
+Owner.create(name: "Morty")
+Owner.create(name: "Mr. Meseeks")
+Owner.create(name: "Gazorpazop")
 
-puts "Creating freebies..."
+puts "Creating projects..."
 
 # ***************************************************************
-# * TODO: create freebies! Remember, a freebie belongs to a dev *
-# * and a freebie belongs to a company.                         *
+# * TODO: create projects! Remember, a project belongs to a house *
+# * and a project belongs to an owner.                            *
 # ***************************************************************
-# Create freebies Here
-Freebie.create(dev: Dev.first, company: Company.first, item_name: "hat", value: 2)
-Freebie.create(dev: Dev.first, company: Company.second, item_name: "mug", value: 5)
-Freebie.create(dev: Dev.second, company: Company.first, item_name: "sticker", value: 10)
+# Create projects Here
+Project.create(price: 2000, owner: Owner.first, house: House.first)
+Project.create(price: 50000, owner: Owner.second, house: House.second)
+Project.create(price: 10000, owner: Owner.first, house: House.third)
 
 puts "Seeding done!"
