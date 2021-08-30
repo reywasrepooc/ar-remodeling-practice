@@ -1,17 +1,11 @@
-# Phase 3 Active Record Mock Code Challenge: Freebie Tracker
+# Phase 3 Active Record Mock Code Challenge: Remodeling Practice Lab
 
-For this assignment, we'll be working with a freebie domain.
+We have three models: `House`, `Owner`, and `Project`
 
-As developers, when you attend hackathons, you'll realize they hand out a lot of
-free items (informally called _freebies_, or swag)! Let's make an app for
-developers that keeps track of all the freebies they obtain.
+For our purposes, a `House` has many `Project`s, an `Owner` has many `Project`s,
+and a `Project` belongs to an `Owner` and to a `House`.
 
-We have three models: `Company`, `Dev`, and `Freebie`
-
-For our purposes, a `Company` has many `Freebie`s, a `Dev` has many `Freebie`s,
-and a `Freebie` belongs to a `Dev` and to a `Company`.
-
-`Company` - `Dev` is a many to many relationship.
+`House` - `Owner` is a many to many relationship.
 
 **Note**: You should draw your domain on paper or on a whiteboard _before you
 start coding_. Remember to identify a single source of truth for your data.
@@ -31,11 +25,7 @@ Build out all of the methods listed in the deliverables. The methods are listed
 in a suggested order, but you can feel free to tackle the ones you think are
 easiest. Be careful: some of the later methods rely on earlier ones.
 
-**Remember!** This code challenge does not have tests. You cannot run `rspec`
-and you cannot run `learn`. You'll need to create your own sample instances so
-that you can try out your code on your own. Make sure your associations and
-methods work in the console before submitting.
-
+**Remember!** 
 We've provided you with a tool that you can use to test your code. To use it,
 run `rake console` from the command line. This will start a `pry` session with
 your classes defined. You can test out the methods that you write here. You are
@@ -56,25 +46,10 @@ comments describing your progress.
 
 ## What You Already Have
 
-The starter code has migrations and models for the initial `Company` and `Dev`
-models, and seed data for some `Company`s and `Dev`s. The schema currently looks
-like this:
+The starter code has migrations and models for the initial `House` and `Owner`
+models, and seed data for some `House`s and `Owner`s.
 
-### companies Table
-
-| Column        | Type    |
-| ------------- | ------- |
-| name          | String  |
-| founding_year | Integer |
-
-### devs Table
-
-| Column | Type   |
-| ------ | ------ |
-| name   | String |
-
-You will need to create the migration for the `freebies` table using the
-attributes specified in the deliverables below.
+You will need to create the migration for the `projects` table using the attributes specified in the deliverables below.
 
 ## Deliverables
 
@@ -91,19 +66,17 @@ classes when you're approaching the deliverables below.
 ### Migrations
 
 Before working on the rest of the deliverables, you will need to create a
-migration for the `freebies` table.
+migration for the `projects` table.
 
-- A `Freebie` belongs to a `Dev`, and a `Freebie` also belongs to a `Company`.
-  In your migration, create any columns your `freebies` table will need to
-  establish these relationships using the right foreign keys.
-- The `freebies` table should also have:
-  - An `item_name` column that stores a string.
-  - A `value` column that stores an integer.
+- A `Project` belongs to a `Owner`, and a `Project` also belongs to a `House`.
+  In your migration, create any columns your `projects` table will need to **establish these relationships using the right foreign keys.**
+- The `projects` table should also have:
+  - A `price` column that stores an integer.
 
-After creating the `freebies` table using a migration, use the `seeds.rb` file to
-create instances of your `Freebie` class so you can test your code.
+After creating the `projects` table using a migration, use the `seeds.rb` file to
+create instances of your `Project` class so you can test your code.
 
-**Once you've set up your `freebies` table**, work on building out the following
+**Once you've set up your `projects` table**, work on building out the following
 deliverables.
 
 ### Object Association Methods
@@ -111,43 +84,48 @@ deliverables.
 Use Active Record association macros and Active Record query methods where
 appropriate (i.e. `has_many`, `has_many through`, and `belongs_to`).
 
-**Note**: The plural of "freebie" is "freebies" and the singular of "freebies"
-is "freebie".
+#### Project
 
-#### Freebie
+- `Project#owner`
+  - returns the `Owner` instance for this Project
+- `Project#house`
+  - returns the `House` instance for this Project
 
-- `Freebie#dev`
-  - returns the `Dev` instance for this Freebie
-- `Freebie#company`
-  - returns the `Company` instance for this Freebie
+#### House
 
-#### Company
+- `House#projects`
+  - returns a collection of all the projects for the House
+- `House#owners`
+  - returns a collection of all the owners who have projects for the House
 
-- `Company#freebies`
-  - returns a collection of all the freebies for the Company
-- `Company#devs`
-  - returns a collection of all the devs who collected freebies from the Company
+#### Owner
 
-#### Dev
-
-- `Dev#freebies`
-  - returns a collection of all the freebies that the Dev has collected
-- `Dev#companies`
-  - returns a collection of all the companies that the Dev has collected
-    freebies from
+- `Owner#projects`
+  - returns a collection of all the projects that the Owner has done
+- `Owner#houses`
+  - returns a collection of all the houses that the Owner has
+    projects for
 
 Use `rake console` and check that these methods work before proceeding. For
-example, you should be able to call `Dev.first.companies` and see a list of the
-companies for the first dev in the database based on your seed data; and
-`Freebie.first.dev` should return the dev for the first freebie in the database.
+example, you should be able to call `Owner.first.houses` and see a list of the
+houses for the first owner in the database based on your seed data; and
+`Project.first.owner` should return the owner for the first project in the database.
 
 ### Aggregate and Association Methods
 
-#### Freebie
+#### House
 
-- `Freebie#print_details`
-  - should return a string formatted as follows:
-    `{insert dev's name} owns a {insert freebie's item_name} from {insert company's name}`
+- `House.oldest_house`
+  - should return the oldest house 
+
+- `House.get_houses_with_solar`
+  - should return a collection of houses that have solar installed
+
+- `House#install_solar`
+  - if house doesn't have solar, update it's `solar` attribute. If the house already has solar, puts out "This house already has solar installed"
+
+- `House#schedule+project(owner, price)`
+  - takes an `owner` (an instance of the `Owner` class) and a price as arguments, and create a new `Project` instance associated with this house and the given owner
 
 #### Company
 

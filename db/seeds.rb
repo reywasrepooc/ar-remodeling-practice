@@ -19,5 +19,6 @@ puts "Creating projects..."
 Project.create(price: 2000, owner: Owner.first, house: House.first)
 Project.create(price: 50000, owner: Owner.second, house: House.second)
 Project.create(price: 10000, owner: Owner.first, house: House.third)
+Project.create(price: 15000, owner: Owner.first, house: House.first)
 
 puts "Seeding done!"
