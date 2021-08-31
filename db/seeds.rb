@@ -17,8 +17,5 @@ puts "Creating freebies..."
 # * and a freebie belongs to a company.                         *
 # ***************************************************************
 # Create freebies Here
-Freebie.create(dev: Dev.first, company: Company.first, item_name: "hat", value: 2)
-Freebie.create(dev: Dev.first, company: Company.second, item_name: "mug", value: 5)
-Freebie.create(dev: Dev.second, company: Company.first, item_name: "sticker", value: 10)
 
 puts "Seeding done!"
