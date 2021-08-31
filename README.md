@@ -122,26 +122,30 @@ houses for the first owner in the database based on your seed data; and
   - should return a collection of houses that have solar installed
 
 - `House#install_solar`
-  - if house doesn't have solar, update it's `solar` attribute. If the house already has solar, puts out "This house already has solar installed"
+  - if house doesn't have solar, update it's `solar` attribute. If the house already has solar, `puts` out "This house already has solar installed"
 
-- `House#schedule+project(owner, price)`
+- `House#schedule_project(owner, price)`
   - takes an `owner` (an instance of the `Owner` class) and a price as arguments, and create a new `Project` instance associated with this house and the given owner
 
-#### Company
+- `House#total_remodeling_cost`
+  - should retrun the total price of all the projects associated with this house
 
-- `Company#give_freebie(dev, item_name, value)`
-  - takes a `dev` (an instance of the `Dev` class), an `item_name` (string), and a `value`
-    as arguments, and creates a new `Freebie` instance associated with this
-    company and the given dev
-- `Company.oldest_company`
-  - returns the `Company` instance with the earliest founding year
+#### Owner
 
-#### Dev
+- `Owner#schedule_project(house, price)`
+  - takes a `house` (an instance of the `House` class) and a price as arguments, and create a new `Project` instance associated with this owner and the given owner
 
-- `Dev#received_one?(item_name)`
-  - accepts an `item_name` (string) and returns true if any of the freebies
-    associated with the dev has that `item_name`, otherwise returns false
-- `Dev#give_away(dev, freebie)`
-  - accepts a `Dev` instance and a `Freebie` instance, changes the freebie's dev
-    to be the given dev; your code should only make the change if the freebie
-    belongs to the dev who's giving it away
+- `Owner#total_cost_of_all_projects`
+  - should return the total cost for all the owner's projects
+
+- `Owner#list_of_all_states`
+  - should return a collection of unique strings for all states the `owner` has a `house` in
+
+#### Project
+
+- `Project.total_cost`
+  - should return the total cost of all `projects`
+
+- `Project#install_solar_and_update_price_by_500`
+  - if house already has solar installed `puts` `"You're good to go."`
+  - If house doesn't have solar, update the solar attribute to true, increase the project's price by 500, and `puts` out `"Solar added to this project. The new price is #{new project price}"`
